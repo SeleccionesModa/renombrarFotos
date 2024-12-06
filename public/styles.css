@@ -1,0 +1,29 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+textarea {
+    width: 50%;
+    overflow-y: scroll;
+    height: 50vh;
+    resize: none; /* Remove this if you want the user to resize the textarea */
+}
+
+button{
+    width: 20%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#nextstep{
+    margin-top: 5%;
+    background-color: lightgray;
+    display: none;
+}
+#nextstep:hover{
+    background-color: grey;
+}
