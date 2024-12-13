@@ -53,11 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
     nextStepButton.addEventListener('click', () => {
         document.body.innerHTML = `
             <div class="container" id="step2">
-                <h1>Select Directory</h1>
-                <button id="selectDirectory">Select Directory</button>
-                <button id="renamePhotos">Rename Photos</button>
+                <h1>Selecciona el directorio con todas las fotos</h1>
+                <button id="selectDirectory">Seleccionar Directorio</button>
+                <button id="renamePhotos">Renombrar fotos</button>
             </div>
         `;
+        document.getElementById("renamePhotos").style.display = "none";
+
+
         // Reinitialize event listeners for the new content
         initializeStep2();
     });
@@ -77,8 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         array2.push(entry.name);
                     }
                 }
+                document.getElementById("renamePhotos").style.display = "block";
                 console.log('Array2:', array2);
             } catch (error) {
+                alert('Selecciona un directorio válido')
                 console.error('Error selecting directory:', error);
             }
         });
@@ -90,21 +95,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 let matches = array2.filter(file => file.startsWith(item));
                 matches.sort((a, b) => {
                     // Custom sorting logic
-                    let order = ['MOD', 'ED', 'FLATFRONT', 'FLATBACK'];
+                    let order = ['MOD', 'ED', 'FLATFRONT', 'FLATBACK', 'FLAT'];
                     let aIndex = order.findIndex(o => a.includes(o));
                     let bIndex = order.findIndex(o => b.includes(o));
                     return aIndex - bIndex;
                 });
                 sortedFiles.push(...matches);
             });
-            return sortedFiles;
+            if (sortedFiles.length > 0) {
+                return sortedFiles;
+            } else {
+                alert('Selecciona un directorio con fotos con el formato requerido')
+            }
+
+        }
+
+        // Function to rename files 
+        function renameFiles(sortedFiles) {
+            let renameMap = {};
+            sortedFiles.forEach((file, index) => {
+                let baseName = file.split('_').slice(0, 2).join('_');
+                if (!renameMap[baseName]) {
+                    renameMap[baseName] = 1;
+                } else {
+                    renameMap[baseName]++;
+                }
+                let newName = `${baseName}_${renameMap[baseName]}.jpg`;
+                console.log(`Renaming ${file} to ${newName}`);
+                // Implement the actual renaming logic here 
+            });
         }
 
         // Event listener for renaming photos
         renamePhotosButton.addEventListener('click', () => {
             const sortedFiles = compareAndSort(array1, array2);
             console.log('Sorted Files:', sortedFiles);
-            // Implement renaming logic here
+            renameFiles(sortedFiles);
         });
     }
 });

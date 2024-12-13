@@ -11,14 +11,17 @@
 
 <body>
   <div class="container" id="step1">
-    <h1>Paste the Products here</h1>
+    <h1>Pegue los artículos aquí:</h1>
     <textarea></textarea>
-    <input type="file" id="fileInput" accept=".xlsx, .xls"></input>
+    <div class="excelcontainer">
+      <p>O seleccione el excel con los artículos</p>
+      <span>➜</span>
+      <input type="file" id="fileInput" accept=".xlsx, .xls"></input>
+    </div>
+    <button id="nextstep">Siguiente paso</button>
 
     <script src="front.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <button id="nextstep">Siguiente paso</button>
-
   </div>
 </body>
 
